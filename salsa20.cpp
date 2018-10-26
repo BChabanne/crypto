@@ -6,39 +6,39 @@ uint32_t Salsa20::lrot(uint32_t x, uint32_t c){
 }
 
 
-void Salsa20::quaterround(const vector<uint32_t&>& y, vector<uint32_t&>& z){
-
+vector<uint32_t> Salsa20::quaterround(const vector<uint32_t>& y) {
+	return vector<uint32_t>();
 }
 
-void Salsa20::rowround(const vector<uint32_t&>& y, vector<uint32_t&> & z){
-
+vector<uint32_t> Salsa20::rowround(const vector<uint32_t>& y) {
+	return vector<uint32_t>();	
 }
 
-void Salsa20::columnround(const vector<uint32_t&>& y, vector<uint32_t&>& z){
-
+vector<uint32_t> Salsa20::columnround(const vector<uint32_t>& y){
+	return vector<uint32_t>();
 }
 
-void Salsa20::doubleround(const vector<uint32_t&>& x, vector<uint32_t&>& z){
-
+vector<uint32_t> Salsa20::doubleround(const vector<uint32_t>& x){
+	return vector<uint32_t>();
 }
 
-uint32_t Salsa20::littleendian(const vector<char&>& b){
+uint32_t Salsa20::littleendian(const vector<unsigned char>& b){
 	return 0;
 }
 
-void Salsa20::littleendian_inv(uint32_t x, vector<char&>& b){
-
+vector<unsigned char> Salsa20::littleendian_inv(uint32_t x){
+	return vector<unsigned char>();
 }
 
-vector<char> Salsa20::Salsa20(const vector<char>& x){
-	return vector<char>();
+vector<unsigned char> Salsa20::Salsa20(const vector<unsigned char>& x){
+	return vector<unsigned char>();
 }
 
-vector<char> Salsa20::Salsa20Exp(const vector<char>& k, const vector<char>& v){
-	return vector<char>();
+vector<unsigned char> Salsa20::Salsa20Exp(const vector<unsigned char>& k, const vector<unsigned char>& v){
+	return vector<unsigned char>();
 }
 
-vector<char> Salsa20::Salsa20Encrypt(const vector<char>& k, const vector<char>& n, const vector<char>& m){
-	return vector<char>();
+vector<unsigned char> Salsa20::Salsa20Encrypt(const vector<unsigned char>& k, const vector<unsigned char>& n, const vector<unsigned char>& m){
+	return vector<unsigned char>();
 }
 
