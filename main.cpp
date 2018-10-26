@@ -4,6 +4,11 @@
 using namespace std;
 
 int main(){
-	test();
+	bool success = test();
+	if(success){
+		cout << "All tests completed" << endl;
+	} else {
+		cout << "Unit test failed" << endl;
+	}
 	return 0;
 }

@@ -45,4 +45,5 @@ namespace Salsa20 {
 	vector<unsigned char> Salsa20Encrypt(const vector<unsigned char>& k, const vector<unsigned char>& n, const vector<unsigned char>& m);
 	/*Return Salsa20Encrypt as descripbed in TP*/
 }
+	
 #endif
