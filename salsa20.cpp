@@ -21,9 +21,9 @@ vector<uint32_t> Salsa20::quaterround(const vector<uint32_t>& y) {
 }
 
 template<typename T>
-static vector<T> get_vector_part(const vector<T>& v, const vector<int>& number){
+static vector<T> get_vector_part(const vector<T>& v, const vector<unsigned int>& number){
 	vector<T> r(number.size());
-	for(int i = 0; i < number.size(); i++){
+	for(unsigned int i = 0; i < number.size(); i++){
 		if(number[i] >= v.size()){
 			throw invalid_argument("Selected element of the part of vector is out of bound");
 		}
@@ -34,11 +34,11 @@ static vector<T> get_vector_part(const vector<T>& v, const vector<int>& number){
 }
 
 template<typename T>
-static void set_vector_part(vector<T>& toChange, const vector<T>& newValues, const vector<int>& indices){
+static void set_vector_part(vector<T>& toChange, const vector<T>& newValues, const vector<unsigned int>& indices){
 	if(newValues.size() != indices.size()){
 		throw invalid_argument("Values to set need to have an indices in the vector to be changed");
 	}
-	for(int i = 0; i < newValues.size(); i++){
+	for(unsigned int i = 0; i < newValues.size(); i++){
 		if(indices[i] > toChange.size()){
 			throw invalid_argument("Indice to replace is out of bound");
 		}
@@ -52,17 +52,17 @@ vector<uint32_t> Salsa20::rowround(const vector<uint32_t>& y) {
 	}
 	vector<uint32_t> tmp, z(16);
 	
-	tmp = Salsa20::quaterround(get_vector_part(y, vector<int>{0,1,2,3}));
-	set_vector_part(z, tmp, vector<int>{0,1,2,3});
+	tmp = Salsa20::quaterround(get_vector_part(y, vector<unsigned int>{0,1,2,3}));
+	set_vector_part(z, tmp, vector<unsigned int>{0,1,2,3});
 	
-	tmp = Salsa20::quaterround(get_vector_part(y, vector<int>{5,6,7,4}));
-	set_vector_part(z, tmp, vector<int>{5,6,7,4});
+	tmp = Salsa20::quaterround(get_vector_part(y, vector<unsigned int>{5,6,7,4}));
+	set_vector_part(z, tmp, vector<unsigned int>{5,6,7,4});
 	
-	tmp = Salsa20::quaterround(get_vector_part(y, vector<int>{10,11,8,9}));
-	set_vector_part(z, tmp, vector<int>{10,11,8,9});
+	tmp = Salsa20::quaterround(get_vector_part(y, vector<unsigned int>{10,11,8,9}));
+	set_vector_part(z, tmp, vector<unsigned int>{10,11,8,9});
 	
-	tmp = Salsa20::quaterround(get_vector_part(y, vector<int>{15,12,13,14}));
-	set_vector_part(z, tmp, vector<int>{15,12,13,14});
+	tmp = Salsa20::quaterround(get_vector_part(y, vector<unsigned int>{15,12,13,14}));
+	set_vector_part(z, tmp, vector<unsigned int>{15,12,13,14});
 	
 	return z;	
 }
@@ -73,17 +73,17 @@ vector<uint32_t> Salsa20::columnround(const vector<uint32_t>& y){
 	}
 	vector<uint32_t> tmp, z(16);
 	
-	tmp = Salsa20::quaterround(get_vector_part(y, vector<int>{0,4,8,12}));
-	set_vector_part(z, tmp, vector<int>{0,4,8,12});
+	tmp = Salsa20::quaterround(get_vector_part(y, vector<unsigned int>{0,4,8,12}));
+	set_vector_part(z, tmp, vector<unsigned int>{0,4,8,12});
 	
-	tmp = Salsa20::quaterround(get_vector_part(y, vector<int>{5,9,13,1}));
-	set_vector_part(z, tmp, vector<int>{5,9,13,1});
+	tmp = Salsa20::quaterround(get_vector_part(y, vector<unsigned int>{5,9,13,1}));
+	set_vector_part(z, tmp, vector<unsigned int>{5,9,13,1});
 	
-	tmp = Salsa20::quaterround(get_vector_part(y, vector<int>{10,14,2,6}));
-	set_vector_part(z, tmp, vector<int>{10,14,2,6});
+	tmp = Salsa20::quaterround(get_vector_part(y, vector<unsigned int>{10,14,2,6}));
+	set_vector_part(z, tmp, vector<unsigned int>{10,14,2,6});
 	
-	tmp = Salsa20::quaterround(get_vector_part(y, vector<int>{15,3,7,11}));
-	set_vector_part(z, tmp, vector<int>{15,3,7,11});
+	tmp = Salsa20::quaterround(get_vector_part(y, vector<unsigned int>{15,3,7,11}));
+	set_vector_part(z, tmp, vector<unsigned int>{15,3,7,11});
 	
 	return z;	
 }
@@ -119,8 +119,8 @@ vector<unsigned char> Salsa20::Salsa20(const vector<unsigned char>& x){
 	vector<unsigned char> t(64);
 	vector<uint32_t> y, z;
 	
-	for(int i = 0; i < 16; i++){
-		vector<unsigned char> tmp_x = get_vector_part(x, vector<int>{4*i, 4*i+1, 4*i+2, 4*i+3});
+	for(unsigned int i = 0; i < 16; i++){
+		vector<unsigned char> tmp_x = get_vector_part(x, vector<unsigned int>{4*i, 4*i+1, 4*i+2, 4*i+3});
 		y.push_back( littleendian(tmp_x) );
 	}
 	
@@ -129,8 +129,8 @@ vector<unsigned char> Salsa20::Salsa20(const vector<unsigned char>& x){
 		z = doubleround(z);
 	}
 	
-	for(int i = 0; i < 16; i++){
-		set_vector_part(t, littleendian_inv(z[i] + y[i]), vector<int>{4*i, 4*i+1, 4*i+2, 4*i+3});
+	for(unsigned int i = 0; i < 16; i++){
+		set_vector_part(t, littleendian_inv(z[i] + y[i]), vector<unsigned int>{4*i, 4*i+1, 4*i+2, 4*i+3});
 	}
 	return t;
 }
@@ -168,13 +168,14 @@ vector<unsigned char> Salsa20::Salsa20Encrypt(const vector<unsigned char>& k, co
 	vector<unsigned char> c(m.size()), z;
 	
 	int overflow = 0;
+	const unsigned int MAX_VAL = (unsigned int)(((unsigned int)(1 << 16) << 16) - 1); //Using a such complicated way of writing to avoid c++ warning because of overflow
 	for(unsigned int i = 0; i < (m.size() >> 6) + 1; i++){
 		z = z + Salsa20::Salsa20Exp(k,n + littleendian_inv(i) + littleendian_inv(overflow));
-		if( i  == 1 << 32 - 1){
+		if( i  == MAX_VAL){
 			overflow ++;
 		}
 	} 
-	for(int i = 0; i < m.size(); i++ ){
+	for(unsigned int i = 0; i < m.size(); i++ ){
 		c[i] = m[i] ^ z[i];
 	}
 	return c;
