@@ -339,47 +339,31 @@ static bool test_Salsa20Encrypt(){
 	return success;
 }
 
+static bool test_function( bool (*f)(), const string& name){
+	if(!f()){
+		cout << "Test of " << name << " didn't succeed" << endl;
+		return false;
+	}
+	return true;
+}
+
 bool test(){
 	bool success = true;
-	if(!test_lrot()){
-		success = false;
-		cout << "Test of lrot didn't succeded" << endl;
-	}
-	if(!test_quaterround()){
-		success = false;
-		cout << "Test of quaterround didn't succeded" << endl;
-	}
-	if(!test_rowround()){
-		success = false;
-		cout << "Test of rowround didn't succeded" << endl;
-	}
-	if(!test_columnround()){
-		success = false;
-		cout << "Test of columnround didn't succeded" << endl;
-	}
-	if(!test_doubleround()){
-		success = false;
-		cout << "Test of doubleround didn't succeded" << endl;
-	}
-	if(!test_littleendian()){
-		success = false;
-		cout << "Test of littleendian didn't succeded" << endl;
-	}
-	if(!test_littleendian_inv()){
-		success = false;
-		cout << "Test of littleendian_inv didn't succeded" << endl;
-	}
-	if(!test_Salsa20()){
-		success = false;
-		cout << "Test of Salsa20 didn't succeded" << endl;
-	}
-	if(!test_Salsa20Exp()){
-		success = false;
-		cout << "Test of Salsa20Exp didn't succeded" << endl;
-	}
-	if(!test_Salsa20Encrypt()){
-		success = false;
-		cout << "Test of Salsa20Encrypt didn't succeded" << endl;
+	vector<pair<string, bool(*)()> > functions{
+		{"test_lrot", test_lrot},
+		{"test_quaterround", test_quaterround},
+		{"test_rowround" , test_rowround},
+		{"test_columnround", test_columnround},
+		{"test_doubleround", test_doubleround},
+		{"test_littleendian", test_littleendian},
+		{"test_littleendian_inv", test_littleendian_inv},
+		{"test_Salsa20", test_Salsa20},
+		{"test_Salsa20Exp", test_Salsa20Exp},
+		{"test_Salsa20Encrypt", test_Salsa20Encrypt}
+	};
+	
+	for(auto f : functions){
+		success = success && test_function(f.second, f.first);
 	}
 
 	return success;	
