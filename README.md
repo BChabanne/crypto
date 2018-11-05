@@ -1,4 +1,4 @@
-#How code is organised
+# How code is organised
 
 Functions part of the Salsa20 algorithm are defined in `salsa20.h` and implemented in `salsa.cpp`
 
@@ -6,7 +6,7 @@ Functions part of the Salsa20 algorithm are defined in `salsa20.h` and implement
 
 Finaly, some functions for concatenating vectors and for printing vectors and pair are defined in `utility.hpp`.
 
-#How to build and run
+# How to build and run
 
 By default, you can use `make` to rebuild all the program and launch it.
 
