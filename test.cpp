@@ -9,12 +9,14 @@ using namespace std;
 
 template<typename T, typename U>
 static void print_data(const T& entry, const U& output, const U& result){
+	/*This function is used when there is an error between entry and output. It's just a simple visualization*/
 	cout << "Entry    : " << entry << endl;
 	cout << "Output   : " << output << endl ;
 	cout << "Expected : " << result << endl;
 }
 
 static bool test_lrot(){
+	/*Test function with entry given in TP*/
 	uint32_t y = 0xc0a8787e,
 		z = Salsa20::lrot(y, 5), 
 		r =0x150f0fd8;
@@ -25,6 +27,7 @@ static bool test_lrot(){
 }
 
 static bool test_quaterround(){
+	/*Test function with entry given in TP*/
 	vector< vector<uint32_t>> y{ 
 			{0x00000000, 0x00000000, 0x00000000, 0x00000000},
 			{0x00000001, 0x00000000, 0x00000000, 0x00000000},
@@ -65,6 +68,7 @@ static bool test_quaterround(){
 }
 
 static bool test_rowround(){
+	/*Test function with entry given in TP*/
 	vector<uint32_t> y1{0x00000001, 0x00000000, 0x00000000, 0x00000000, 
 		0x00000001, 0x00000000, 0x00000000, 0x00000000, 
 		0x00000001, 0x00000000, 0x00000000, 0x00000000, 
@@ -105,6 +109,7 @@ static bool test_rowround(){
 }
 
 static bool test_columnround(){
+	/*Test function with entry given in TP*/
 	vector<uint32_t> y1{0x00000001, 0x00000000, 0x00000000, 0x00000000, 
 	0x00000001, 0x00000000, 0x00000000, 0x00000000, 
 	0x00000001, 0x00000000, 0x00000000, 0x00000000, 
@@ -145,7 +150,8 @@ static bool test_columnround(){
 }
 
 static bool test_doubleround(){
-vector<uint32_t> y1{0x00000001, 0x00000000, 0x00000000, 0x00000000, 
+	/*Test function with entry given in TP*/
+	vector<uint32_t> y1{0x00000001, 0x00000000, 0x00000000, 0x00000000, 
 	0x00000000, 0x00000000, 0x00000000, 0x00000000, 
 	0x00000000, 0x00000000, 0x00000000, 0x00000000, 
 	0x00000000, 0x00000000, 0x00000000, 0x00000000
@@ -185,6 +191,7 @@ vector<uint32_t> y1{0x00000001, 0x00000000, 0x00000000, 0x00000000,
 }
 
 static bool test_littleendian(){
+	/*Test function with entry given in TP*/
 	vector< vector<unsigned char> > y{
 		{0, 0, 0, 0},
 		{86, 75, 30, 9},
@@ -204,6 +211,7 @@ static bool test_littleendian(){
 }
 
 static bool test_littleendian_inv(){
+	/*Test function with entry given in TP*/
 	vector<uint32_t> y{0x00000000, 0x091e4b56, 0xfaffffff};
 	vector< vector<unsigned char> > z(3), r{
 		{0, 0, 0, 0},
@@ -224,6 +232,7 @@ static bool test_littleendian_inv(){
 }
 
 static bool test_Salsa20(){
+	/*Test function with entry given in TP*/
 	vector<vector<unsigned char> > y{
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 		 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -269,6 +278,7 @@ static bool test_Salsa20(){
 }
 
 static bool test_Salsa20Exp(){
+	/*Test function with entry given in TP*/
 	vector<unsigned char> k0{1,2,3,4,5,6,7,8, 9,10,11,12,13,14,15,16}, 
 		k1{201,202,203,204,205,206,207,208, 209,210,211,212,213,214,215,216}, 
 		v{101,102,103,104,105,106,107,108, 109,110,111,112,113,114,115,116},
@@ -297,6 +307,7 @@ static bool test_Salsa20Exp(){
 }
 
 static bool test_Salsa20Encrypt(){
+	/*Test function with entry given in TP*/
 	vector<unsigned char> k0{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16},
 		k1{201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216},
 		n{101,102,103,104,105,106,107,108},
@@ -340,6 +351,7 @@ static bool test_Salsa20Encrypt(){
 }
 
 static bool test_function( bool (*f)(), const string& name){
+	/*Test function with entry given in TP*/
 	if(!f()){
 		cout << "Test of " << name << " didn't succeed" << endl;
 		return false;
@@ -349,6 +361,8 @@ static bool test_function( bool (*f)(), const string& name){
 
 bool test(){
 	bool success = true;
+	
+	/*Test apply on all these functions*/
 	vector<pair<string, bool(*)()> > functions{
 		{"test_lrot", test_lrot},
 		{"test_quaterround", test_quaterround},
@@ -363,6 +377,8 @@ bool test(){
 	};
 	
 	for(auto f : functions){
+		/*Test all functions, and will return false if at least
+		one of these test failed*/
 		success = success && test_function(f.second, f.first);
 	}
 

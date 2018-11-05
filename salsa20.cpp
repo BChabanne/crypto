@@ -4,10 +4,13 @@
 #include "utility.hpp"
 
 uint32_t Salsa20::lrot(uint32_t x, uint32_t c){
+	/*lrot a left rotation of c bit from x*/
   return (x << c)|(x >> (8*sizeof(uint32_t) - c)); 
 }
 
 vector<uint32_t> Salsa20::quaterround(const vector<uint32_t>& y) {
+	/*Calculate value of the 4-uple y applying quaterround as defined in TP 
+	and save result in z*/
 	if(y.size() != 4){
 			throw invalid_argument("Argument vector should be of size 4");
 	}
@@ -22,6 +25,7 @@ vector<uint32_t> Salsa20::quaterround(const vector<uint32_t>& y) {
 
 template<typename T>
 static vector<T> get_vector_part(const vector<T>& v, const vector<unsigned int>& number){
+	/*This function is a util function that return a sub vector extracted with indices defined in number*/
 	vector<T> r(number.size());
 	for(unsigned int i = 0; i < number.size(); i++){
 		if(number[i] >= v.size()){
@@ -35,6 +39,7 @@ static vector<T> get_vector_part(const vector<T>& v, const vector<unsigned int>&
 
 template<typename T>
 static void set_vector_part(vector<T>& toChange, const vector<T>& newValues, const vector<unsigned int>& indices){
+	/*This function is a util function that will change value of the vector toChange with values of newValues corresponding to indices of toChange*/
 	if(newValues.size() != indices.size()){
 		throw invalid_argument("Values to set need to have an indices in the vector to be changed");
 	}
@@ -47,6 +52,8 @@ static void set_vector_part(vector<T>& toChange, const vector<T>& newValues, con
 }
 
 vector<uint32_t> Salsa20::rowround(const vector<uint32_t>& y) {
+	/*Calculate value of the 16-tuple y applying rowround as defined in TP
+	and save result in z*/
 	if(y.size() != 16){
 		throw invalid_argument("Argument vector should be of size 16");
 	}
@@ -68,6 +75,8 @@ vector<uint32_t> Salsa20::rowround(const vector<uint32_t>& y) {
 }
 
 vector<uint32_t> Salsa20::columnround(const vector<uint32_t>& y){
+	/*Calculate value of the 16-tuple y applying columnround as defined in TP
+	and save result in z*/
 	if(y.size() != 16){
 		throw invalid_argument("Argument vector should be of size 16");
 	}
@@ -89,6 +98,9 @@ vector<uint32_t> Salsa20::columnround(const vector<uint32_t>& y){
 }
 
 vector<uint32_t> Salsa20::doubleround(const vector<uint32_t>& x){
+	/*Calculate composition of rowround and columnround and save result in z
+		x must be a 16-tuple
+	*/ 
 	if(x.size() != 16){
 		throw invalid_argument("Argument vector should be of size 16");
 	}
@@ -96,6 +108,7 @@ vector<uint32_t> Salsa20::doubleround(const vector<uint32_t>& x){
 }
 
 uint32_t Salsa20::littleendian(const vector<unsigned char>& b){
+	/*Return the value of littleendian of the 4-tuple b as described in TP*/
 	if(b.size() != 4){
 		throw invalid_argument("Argument vector should be of size 4");
 	}
@@ -104,6 +117,7 @@ uint32_t Salsa20::littleendian(const vector<unsigned char>& b){
 }
 
 vector<unsigned char> Salsa20::littleendian_inv(uint32_t x){
+	/*Return the littleendian composants of x in r*/
 	vector<unsigned char> r(4);
 	for(int i = 0; i < 4; i++){
 		r[i] = x % 256;
@@ -113,6 +127,7 @@ vector<unsigned char> Salsa20::littleendian_inv(uint32_t x){
 }
 
 vector<unsigned char> Salsa20::Salsa20(const vector<unsigned char>& x){
+	/*Salsa20 algorithm as defined in TP*/
 	if(x.size() != 64){
 		throw invalid_argument("Argument vector should be of size 64");
 	}
@@ -136,6 +151,8 @@ vector<unsigned char> Salsa20::Salsa20(const vector<unsigned char>& x){
 }
 
 vector<unsigned char> Salsa20::Salsa20Exp(const vector<unsigned char>& k, const vector<unsigned char>& v){
+	/*Return Slasa20exp as defined in TP depending on key k and initializing 
+	vector v*/
 	bool keyIs32 = k.size() == 32;
 	if(k.size() != 16 && !keyIs32){
 		throw invalid_argument("Key should be of size 16 or 32");
@@ -159,6 +176,7 @@ vector<unsigned char> Salsa20::Salsa20Exp(const vector<unsigned char>& k, const 
 }
 
 vector<unsigned char> Salsa20::Salsa20Encrypt(const vector<unsigned char>& k, const vector<unsigned char>& n, const vector<unsigned char>& m){
+	/*Return Salsa20Encrypt as descripbed in TP*/
 	if(k.size() != 16 && k.size() != 32){
 		throw invalid_argument("Key should be of size 16 or 32");
 	}
